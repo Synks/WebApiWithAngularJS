@@ -13,11 +13,11 @@ app.controller('personController', function ($scope, $http, personService) {
         });
     $scope.edit = function (data) {
         $scope.person = {
-            personId: data.personId,
+            PersonId: data.PersonId,
             FirstName: data.FirstName,
             MiddleName: data.MiddleName,
             LastName: data.LastName,
-            PrimaryEmialAddress: data.PrimaryEmialAddress,
+            PrimaryEmailAddress: data.PrimaryEmailAddress,
             SecondaryEmailAddress: data.SecondaryEmailAddress,
             PhoneNumber: data.PhoneNumber,
             MobileNumber: data.MobileNumber

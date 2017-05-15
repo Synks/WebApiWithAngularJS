@@ -1,7 +1,7 @@
 ﻿@section scripts{
-<script src="~/Scripts/angular.js"></script>
-<script src="~/Scripts/AngularApp.js"></script>
-    }
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/AngularApp.js"></script>
+}
 
 <div ng-app="personModule">
     <div ng-controller="personController">
@@ -9,6 +9,7 @@
         <table>
             <thead>
                 <tr>
+                    <td>Person ID</td>
                     <td>First Name</td>
                     <td>Middle Name</td>
                     <td>Last Name</td>
@@ -33,30 +34,66 @@
                 </tr>
             </tbody>
         </table>
+        <div style="border-top: solid 2px #282828; height: 10px"> </div>
+        <div ng-show="person.PersonId !=''">
+            <h2>Update Person</h2>
+            <div>
+                <label>Perspn Id: {{person.PersonId}}</label>
+            </div>
+            <div>
+                <label>First Name</label>
+                <input type="text" data-ng-model="person.FirstName" />
+            </div>
+            <div>
+                <label>Middle Name</label>
+                <input type="text" data-ng-model="person.MiddleName" />
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input type="text" data-ng-model="person.LastName" />
+            </div>
+            <div>
+                <label>Primary Email Address</label>
+                <input type="text" data-ng-model="person.PrimaryEmailAddress" />
+            </div>
+            <div>
+                <label>Secondary Email Address</label>
+                <input type="text" data-ng-model="person.SecondaryEmailAddress" />
+            </div>
+            <div>
+                <label>Mobile Number</label>
+                <input type="text" data-ng-model="person.MobileNumber" />
+            </div>
+            <div>
+                <label>Phone Number</label>
+                <input type="text" data-ng-model="person.PhoneNumber" />
+            </div>
+           
+        </div>
     </div>
 </div>
 
 @*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>*@
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+            is an ideal platform for building RESTful applications on the .NET Framework.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
