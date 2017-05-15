@@ -10,8 +10,19 @@ app.controller('personController', function ($scope, $http, personService) {
         $scope.personsData= d.data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
-    });
-
+        });
+    $scope.edit = function (data) {
+        $scope.person = {
+            personId: data.personId,
+            FirstName: data.FirstName,
+            MiddleName: data.MiddleName,
+            LastName: data.LastName,
+            PrimaryEmialAddress: data.PrimaryEmialAddress,
+            SecondaryEmailAddress: data.SecondaryEmailAddress,
+            PhoneNumber: data.PhoneNumber,
+            MobileNumber: data.MobileNumber
+        };
+    }
     //// Calculate Total of Price After Initialization
     //$scope.total = function () {
     //    var total = 0;

@@ -20,6 +20,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="person in personsData">
+                    <td>{{person.PersonId}}</td>
                     <td>{{person.FirstName}}</td>
                     <td>{{person.MiddleName}}</td>
                     <td>{{person.LastName}}</td>
@@ -27,6 +28,8 @@
                     <td>{{person.SecondaryEmailAddress}}</td>
                     <td>{{person.MobileNumber}}</td>
                     <td>{{person.PhoneNumber}}</td>
+                    <td><button class="btn btn-primary" ng-click="edit(personsData[$index])">Edit</button></td>
+                    <td><button class="btn btn-danger" ng-click="edit(person.PersonId)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
