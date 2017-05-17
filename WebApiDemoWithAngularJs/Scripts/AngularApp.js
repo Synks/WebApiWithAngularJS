@@ -1,17 +1,37 @@
 ﻿// Defining angularjs module
-var app = angular.module('personModule', []);
+var app = angular.module('personModule', ['ngTable']);
 
 // Defining angularjs Controller and injecting ProductsService
-app.controller('personController', function ($scope, $http, personService) {
-
+app.controller('personController', function ($scope, $http, personService,ngTableParams) {
+    $scope.showVal = false;
+    $scope.hideVal = false;
     $scope.personsData = null;
+    $scope.person = {
+        PersonId: '',
+        FirstName: '',
+        MiddleName: '',
+        LastName: '',
+        PrimaryEmailAddress: '',
+        SecondaryEmailAddress: '',
+        PhoneNumber: '',
+        MobileNumber: ''
+    };
     // Fetching records from the factory created at the bottom of the script file
     personService.GetAllRecords().then(function (d) {
         $scope.personsData= d.data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
         });
+    //$scope.personsTable = new ngTableParams({ page: 1, count: 5 },
+    //    {
+    //        total: $scope.users.length,
+    //        getData: function ($defer, params) {
+    //            $scope.data = $scope.personsData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+    //            $defer.resolve($scope.data);
+    //        }
+    //    });
     $scope.edit = function (data) {
+        $scope.showVal = true;
         $scope.person = {
             PersonId: data.PersonId,
             FirstName: data.FirstName,
@@ -23,116 +43,103 @@ app.controller('personController', function ($scope, $http, personService) {
             MobileNumber: data.MobileNumber
         };
     }
-    //// Calculate Total of Price After Initialization
-    //$scope.total = function () {
-    //    var total = 0;
-    //    angular.forEach($scope.productsData, function (item) {
-    //        total += item.Price;
-    //    })
-    //    return total;
-    //}
+    $scope.clear = function () {
+        $scope.person = {
+            PersonId: '',
+            FirstName: '',
+            MiddleName: '',
+            LastName: '',
+            PrimaryEmailAddress: '',
+            SecondaryEmailAddress: '',
+            PhoneNumber: '',
+            MobileNumber: ''
+        };
+    }
+    $scope.add = function () {
+        $scope.hideVal = true;
+    }
+    //Add New Person
+    $scope.save = function () {
+        if ($scope.person.FirstName != "" &&
+            $scope.person.LastName != "" && $scope.person.MobileNumber != "") {
+            // Call Http request using $.ajax
 
-    //$scope.Person = {
-    //    PersonId: '',
-    //    FirstName: '',
-    //    MiddleName: '',
-    //    LastName: ''
-    //};
+            //$.ajax({
+            //    type: 'POST',
+            //    contentType: 'application/json; charset=utf-8',
+            //    data: JSON.stringify($scope.Product),
+            //    url: 'api/Product/PostProduct',
+            //    success: function (data, status) {
+            //        $scope.$apply(function () {
+            //            $scope.productsData.push(data);
+            //            alert("Product Added Successfully !!!");
+            //            $scope.clear();
+            //        });
+            //    },
+            //    error: function (status) { }
+            //});
 
-    //// Reset product details
-    //$scope.clear = function () {
-    //    $scope.Product.Id = '';
-    //    $scope.Product.Name = '';
-    //    $scope.Product.Price = '';
-    //    $scope.Product.Category = '';
-    //}
+            // or you can call Http request using $http
+            $http({
+                method: 'POST',
+                url: 'http://localhost:64830/api/person',
+                data: $scope.person
+            }).then(function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                $scope.personsData.push(response.data);
+                $scope.clear();
+                $scope.hideVal = false;
+                alert("Person Added Successfully !!!");
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                alert("Error : " + response.data.ExceptionMessage);
+            });
+        }
+        else {
+            alert('Please Enter All the Values !!');
+        }
+    };
 
-    //Add New Item
-    //$scope.save = function () {
-    //    if ($scope.Product.Name != "" &&
-    //        $scope.Product.Price != "" && $scope.Product.Category != "") {
-    //        // Call Http request using $.ajax
+    $scope.cancel = function () {
+        $scope.clear();
+    }
 
-    //        //$.ajax({
-    //        //    type: 'POST',
-    //        //    contentType: 'application/json; charset=utf-8',
-    //        //    data: JSON.stringify($scope.Product),
-    //        //    url: 'api/Product/PostProduct',
-    //        //    success: function (data, status) {
-    //        //        $scope.$apply(function () {
-    //        //            $scope.productsData.push(data);
-    //        //            alert("Product Added Successfully !!!");
-    //        //            $scope.clear();
-    //        //        });
-    //        //    },
-    //        //    error: function (status) { }
-    //        //});
+    // Update Person details
+    $scope.update = function () {
+        if ($scope.person.FirstName != "" &&
+            $scope.person.MiddleName != "" && $scope.person.LastName != "") {
+            $http({
+                method: 'PUT',
+                url: 'http://localhost:64830/api/person/' + $scope.person.PersonId,
+                data: $scope.person
+            }).then(function successCallback(response) {
+                $scope.personsData = response.data;
+                $scope.clear();
+                $scope.showVal = false;
+                alert("Person Updated Successfully !!!");
+            }, function errorCallback(response) {
+                alert("Error : " + response.data.ExceptionMessage);
+            });
+        }
+        else {
+            alert('Please Enter All the Values !!');
+        }
+    };
 
-    //        // or you can call Http request using $http
-    //        $http({
-    //            method: 'POST',
-    //            url: 'api/Product/PostProduct/',
-    //            data: $scope.Product
-    //        }).then(function successCallback(response) {
-    //            // this callback will be called asynchronously
-    //            // when the response is available
-    //            $scope.productsData.push(response.data);
-    //            $scope.clear();
-    //            alert("Product Added Successfully !!!");
-    //        }, function errorCallback(response) {
-    //            // called asynchronously if an error occurs
-    //            // or server returns response with an error status.
-    //            alert("Error : " + response.data.ExceptionMessage);
-    //        });
-    //    }
-    //    else {
-    //        alert('Please Enter All the Values !!');
-    //    }
-    //};
-
-    // Edit product details
-    //$scope.edit = function (data) {
-    //    $scope.Product = { Id: data.Id, Name: data.Name, Price: data.Price, Category: data.Category };
-    //}
-
-    // Cancel product details
-    //$scope.cancel = function () {
-    //    $scope.clear();
-    //}
-
-    //// Update product details
-    //$scope.update = function () {
-    //    if ($scope.Product.Name != "" &&
-    //        $scope.Product.Price != "" && $scope.Product.Category != "") {
-    //        $http({
-    //            method: 'PUT',
-    //            url: 'api/Product/PutProduct/' + $scope.Product.Id,
-    //            data: $scope.Product
-    //        }).then(function successCallback(response) {
-    //            $scope.productsData = response.data;
-    //            $scope.clear();
-    //            alert("Product Updated Successfully !!!");
-    //        }, function errorCallback(response) {
-    //            alert("Error : " + response.data.ExceptionMessage);
-    //        });
-    //    }
-    //    else {
-    //        alert('Please Enter All the Values !!');
-    //    }
-    //};
-
-    //// Delete product details
-    //$scope.delete = function (index) {
-    //    $http({
-    //        method: 'DELETE',
-    //        url: 'api/Product/DeleteProduct/' + $scope.productsData[index].Id,
-    //    }).then(function successCallback(response) {
-    //        $scope.productsData.splice(index, 1);
-    //        alert("Product Deleted Successfully !!!");
-    //    }, function errorCallback(response) {
-    //        alert("Error : " + response.data.ExceptionMessage);
-    //    });
-    //};
+    // Delete Person
+    $scope.delete = function (index) {
+        $http({
+            method: 'DELETE',
+            url: 'http://localhost:64830/api/person' + $scope.personsData[index].PersonId,
+        }).then(function successCallback(response) {
+            $scope.personsData.splice(index, 1);
+            alert("Person Deleted Successfully !!!");
+        }, function errorCallback(response) {
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
 
 });
 
