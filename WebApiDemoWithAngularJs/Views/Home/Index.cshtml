@@ -1,5 +1,6 @@
 ﻿@section scripts{
-    <script src="~/Scripts/angular.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+    @*<script src="~/Scripts/angular.js"></script>*@
     <script src="~/Scripts/AngularApp.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.8.3/ng-table.min.js"></script>
 }
@@ -22,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="person in personsData">
+                <tr ng-repeat="person in data">
                     <td>{{person.PersonId}}</td>
                     <td>{{person.FirstName}}</td>
                     <td>{{person.MiddleName}}</td>

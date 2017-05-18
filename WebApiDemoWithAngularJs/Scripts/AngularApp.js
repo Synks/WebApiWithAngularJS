@@ -5,7 +5,7 @@ var app = angular.module('personModule', ['ngTable']);
 app.controller('personController', function ($scope, $http, personService,ngTableParams) {
     $scope.showVal = false;
     $scope.hideVal = false;
-    $scope.personsData = null;
+    //$scope.personsData = null;
     $scope.person = {
         PersonId: '',
         FirstName: '',
@@ -17,19 +17,25 @@ app.controller('personController', function ($scope, $http, personService,ngTabl
         MobileNumber: ''
     };
     // Fetching records from the factory created at the bottom of the script file
-    personService.GetAllRecords().then(function (d) {
-        $scope.personsData= d.data; // Success
-    }, function () {
-        alert('Error Occured !!!'); // Failed
-        });
-    //$scope.personsTable = new ngTableParams({ page: 1, count: 5 },
-    //    {
-    //        total: $scope.users.length,
-    //        getData: function ($defer, params) {
-    //            $scope.data = $scope.personsData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-    //            $defer.resolve($scope.data);
-    //        }
+    //personService.GetAllRecords().then(function (d) {
+    //    $scope.personsData= d.data; // Success
+    //}, function () {
+    //    alert('Error Occured !!!'); // Failed
     //    });
+    $scope.personsTable = new ngTableParams({ count: 5 },
+        {
+            //total: $scope.personsData.length,
+            getData: function ($defer, params) {
+                personService.GetAllRecords().then(function (d) {
+                    $scope.personsData = d.data; // Success
+                    params.total(Object.keys($scope.personsData).length);
+                    $scope.data = $scope.personsData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                    $defer.resolve($scope.data);
+                }, function () {
+                    alert('Error Occured !!!'); // Failed
+                });
+            }
+        });
     $scope.edit = function (data) {
         $scope.showVal = true;
         $scope.person = {
