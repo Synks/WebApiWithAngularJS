@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "FormValidation";
+}
+@section scripts{
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/AngularApp.js"></script>
+}
+<h2>Form Validation examples</h2>
+<div ng-app="formModule">
+    <div ng-controller="formController">
+        <form name="personForm" ng-submit="submitForm(personFrom.$valid)" novalidate>
+            <div class="row form-group" ng-class="{'has-error':personForm.firstName.$invalid && personForm.firstName.$touched}">
+                <label class="col-md-3">First Name</label>
+                <input class="col-md-4 form-control" name="firstName" type="text" data-ng-model="person.FirstName" required />
+                <p ng-show="personForm.firstName.$invalid && personForm.firstName.$touched" class="help-block">First Name is required</p>
+            </div>
+            <div class="row form-group" ng-class="{'has-error':personForm.middleName.$invalid && personForm.middleName.$touched}">
+                <label class="col-md-3">Middle Name</label>
+                <input class="col-md-4 form-control" name="middleName" type="text" data-ng-model="person.MiddleName" required />
+                <p ng-show="personForm.middleName.$invalid && personForm.middleName.$touched" class="help-block">Middle Name is required</p>
+            </div>
+            <div class="row form-group" ng-class="{'has-error':personForm.lastName.$invalid && personForm.lastName.$touched}">
+                <label class="col-md-3">Last Name</label>
+                <input class="col-md-4 form-control" name="lastName" type="text" data-ng-model="person.LastName" required />
+                <p ng-show="personForm.lastName.$invalid && personForm.lastName.$touched" class="help-block">Last Name is required</p>
+            </div>
+            <div class="row form-group" ng-class="{'has-error':personForm.primaryEmail.$invalid && personForm.primaryEmail.$touched}">
+                <label class="col-md-3">Primary Email Address</label>
+                <input class="col-md-4 form-control" name="primaryEmail" type="email" data-ng-model="person.PrimaryEmailAddress" required />
+                <p ng-show="personForm.primaryEmail.$invalid && personForm.primaryEmail.$touched" class="help-block">Primary Email Address is required</p>
+            </div>
+            <div class="row form-group" ng-class="{'has-error':personForm.secondaryEmail.$invalid && personForm.secondaryEmail.$touched}">
+                <label class="col-md-3">Secondary Email Address</label>
+                <input class="col-md-4 form-control" name="secondaryEmail" type="email" data-ng-model="person.SecondaryEmailAddress" required />
+                <p ng-show="personForm.secondaryEmail.$invalid && personForm.secondaryEmail.$touched" class="help-block">Secondary Email address is required</p>
+            </div>
+            <div class="row form-group" ng-class="{'has-error':personForm.mobileNumber.$invalid && personForm.mobileNumber.$touched}">
+                <label class="col-md-3">Mobile Number</label>
+                <input class="col-md-4 form-control" name="mobileNumber" type="text" data-ng-model="person.MobileNumber" required />
+                <p ng-show="personForm.mobileNumber.$invalid && !personForm.mobileNumber.$pristine" class="help-block">Mobile Number is required</p>
+            </div>
+            <div class="row form-group" ng-class="{'has-error':personForm.phoneNumber.$invalid && personForm.phoneNumber.$touched}">
+                <label class="col-md-3">Phone Number</label>
+                <input class="col-md-4 form-control" name="phoneNumber" type="text" data-ng-model="person.PhoneNumber" required />
+                <p ng-show="personForm.phoneNumber.$invalid && !personForm.phoneNumber.$pristine" class="help-block">Phone number is required</p>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

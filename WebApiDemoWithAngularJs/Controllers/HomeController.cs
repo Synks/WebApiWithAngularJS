@@ -14,5 +14,12 @@ namespace WebApiDemoWithAngularJs.Controllers
 
             return View();
         }
+
+        public ActionResult FormValidation()
+        {
+            ViewBag.Title = "Form Validation example";
+            return View();
+        }
+
     }
 }

@@ -1,8 +1,19 @@
 ﻿// Defining angularjs module
 var app = angular.module('personModule', ['ngTable']);
+var app2 = angular.module('formModule', []);
+app2.controller('formController', function ($scope) {
+    $scope.submitForm = function (isValid) {
+        if (isValid) {
+            alert("Your form is amazing");
+        }
+        else {
+            alert("You are missing with required fields of the forms")
+        }
+    }
+});
 
 // Defining angularjs Controller and injecting ProductsService
-app.controller('personController', function ($scope, $http, personService,ngTableParams) {
+app.controller('personController', function ($scope, $http, personService, ngTableParams) {
     $scope.showVal = false;
     $scope.hideVal = false;
     //$scope.personsData = null;
@@ -22,13 +33,14 @@ app.controller('personController', function ($scope, $http, personService,ngTabl
     //}, function () {
     //    alert('Error Occured !!!'); // Failed
     //    });
-    $scope.personsTable = new ngTableParams({ count: 5 },
+    $scope.personsTable = new ngTableParams({ page: 1, count: 5 },
         {
-            //total: $scope.personsData.length,
+            
             getData: function ($defer, params) {
                 personService.GetAllRecords().then(function (d) {
                     $scope.personsData = d.data; // Success
-                    params.total(Object.keys($scope.personsData).length);
+                    params.total($scope.personsData.length);
+                  //params.total(Object.keys($scope.personsData).length);//different way to get/retrieve the length of object
                     $scope.data = $scope.personsData.slice((params.page() - 1) * params.count(), params.page() * params.count());
                     $defer.resolve($scope.data);
                 }, function () {
@@ -60,6 +72,8 @@ app.controller('personController', function ($scope, $http, personService,ngTabl
             PhoneNumber: '',
             MobileNumber: ''
         };
+        $scope.hideVal = false;
+        $scope.showVal = false;
     }
     $scope.add = function () {
         $scope.hideVal = true;
